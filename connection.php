@@ -1,5 +1,6 @@
 <?php
 
+include "inc/header.php";
 class functions
  {
     function con()
@@ -31,11 +32,38 @@ class functions
             echo '<td>' . $row[1] . '</td>';
             echo '<td>' . $row[2] . '</td>';
             echo '<td>' . $row[3] . '</td>';
-            echo "<td class='text-warning'>" . '<a href="update_data.php?id='.$row[0].'"><i class="bi-PHONE"></i> </a> | <a href="delete.php?id='.$row[0].'"><i class="bi-trash"></i> </a>' . '</td>';
+            echo '<td>' . '<a href="update.php?id='.$row[0].'">Edit</a> | <a class="text black" href="delete.php?id='.$row[0].'">Delete</a>' . '</td>';
             echo '</tr>';
         }
     }
+    function update($name,$email,$password)
+    {
+        $conn = $_SESSION['conn'];
+        $id= $_GET['id'];
+        $name = $_POST['name'];
+        $email=$_POST['email'];
+        $password=$_POST['password'];
+        $query = mysqli_query( $conn, "update login set name='".$name."', email='".$email."', password='".$password."' where id='".$id."'");
+        if ($query)
+        {
+            echo "<script> alert('Data Updated');</script>";
+            echo "<script> window.location.assign('view_data.php');</script>";
+        }
+                
+    }
+    function delete()
+    {
+        $conn = $_SESSION['conn'];
+        $id= $_GET['id'];
+        $select = mysqli_query($conn,"delete from login where id='$id'");
+        if ($select)
+        {
+            echo "<script> alert('Data deleted');</script>";
+            header("view_data.php");
+        }
+                
+    }
 
   }
-
+  include "inc/footer.php";
 ?>

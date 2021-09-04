@@ -2,6 +2,8 @@
 include "connection.php";
 $obj=new functions();
 $obj->con();
+$id=$_GET['id']; 
+$obj->delete($id);
 ?>
 
 <?php include "inc/header.php";?>
